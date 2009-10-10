@@ -74,12 +74,11 @@ public class TestScriptConsole {
         
         JavaCommandProcessor processor2 = new JavaCommandProcessor(console);
         processor2.register("console", console);
-        
         processor2.register("game", game);
         processor2.register("state", debug);
         processor2.importPackage("com.jme.math.Vector3f");
         processor2.register("box", box);
-        box.setLocalScale(0.5f);
+        
         console.registerCommandProcessor("command", processor1);
         console.registerCommandProcessor("java", processor2);
         

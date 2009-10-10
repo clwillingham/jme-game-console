@@ -199,14 +199,15 @@ public class Grid extends TriMesh {
 	 * 		The new texture y coordinate of the point
 	 */
 	public void moveUV(int xIndex, int yIndex, float x, float y) {
-        TriMesh batch = this;
+        //TriMesh batch = this;
         
 		//batch.getTextureBuffer(0).position((xIndex + yIndex * (xQuads + 1)) * 2);
 		//batch.getTextureBuffer(0).put(x).put(y);
         
         //batch.getTextureCoords(0).coords.position((xIndex + yIndex * (xQuads + 1)) * 2);
         //batch.getTextureCoords(0).coords.put(x).put(y);
-        
+        this.getTextureCoords(0).coords.position((xIndex + yIndex * (xQuads + 1)) * 2);
+        this.getTextureCoords(0).coords.put(x).put(y);
 	}
 
 }
