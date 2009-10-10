@@ -123,7 +123,7 @@ public class DialogBox extends Grid {
 		//Move the texture coords appropriately
 		for (int x = 0; x < 4; x++) {
 			for (int y = 0; y < 4; y++) {
-				moveUV(x, y, (borderSize + tileSize * x)/imageBaseSize, (borderSize + tileSize * y)/imageBaseSize);
+				//moveUV(x, y, (borderSize + tileSize * x)/imageBaseSize, (borderSize + tileSize * y)/imageBaseSize);
 			}
 		}
 		
