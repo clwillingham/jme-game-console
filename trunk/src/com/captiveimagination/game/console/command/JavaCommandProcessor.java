@@ -29,8 +29,9 @@ public class JavaCommandProcessor implements CommandProcessor {
 	public void execute(String command, GameConsole console) {
 		try {
 			interpreter.eval(command);
+			
 		} catch(EvalError err) {
-			console.log("Error: " + err.getMessage());
+			console.logErr(err.getMessage());
 		}
 	}
 
