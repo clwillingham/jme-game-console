@@ -47,6 +47,7 @@ public class TestConsole {
 		
     	int rows = 5;
     	GameConsole console = new GameConsole(KeyInput.KEY_GRAVE, rows, true);
+    	
 //    	GameConsole console = new GameConsole(KeyInput.KEY_GRAVE, rows, true, 
 //				new float[]{8, 8, 8, 8}, 
 //				new Vector2f(100, -16), 
