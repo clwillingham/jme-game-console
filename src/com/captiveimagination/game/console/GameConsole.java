@@ -3,6 +3,7 @@
  */
 package com.captiveimagination.game.console;
 
+import java.awt.Color;
 import java.util.*;
 
 import com.captiveimagination.game.spatial.DialogBox;
@@ -107,6 +108,7 @@ public class GameConsole extends BasicGameState implements KeyInputListener {
         this.width = width;
         listeners = new ArrayList<GameConsoleListener>();
         init();
+        prompt.setTextColor(ColorRGBA.red);
     }
     
     private void init() {
@@ -220,17 +222,19 @@ public class GameConsole extends BasicGameState implements KeyInputListener {
         //Create alpha state to blend using alpha
         BlendState bas = DisplaySystem.getDisplaySystem().getRenderer().createBlendState();
         bas.setBlendEnabled(true);
+        
         //bas.setSrcFunction(AlphaState.SB_SRC_ALPHA);
         bas.setSourceFunction(SourceFunction.SourceAlpha);
         //bas.setDstFunction(AlphaState.DB_ONE_MINUS_SRC_ALPHA);
-        bas.setDestinationFunction(DestinationFunction.DestinationAlpha);
-        bas.setTestEnabled(false);
+        bas.setDestinationFunction(DestinationFunction.OneMinusSourceAlpha);
+        bas.setTestFunction(TestFunction.GreaterThan);
+        bas.setTestEnabled(true);
         bas.setEnabled(true);
         
         //set box render state
         box.setRenderState(bas);
         box.updateRenderState();
-        
+        box.setRenderQueueMode(Renderer.QUEUE_TRANSPARENT);
         //return the box
         return box;
     }

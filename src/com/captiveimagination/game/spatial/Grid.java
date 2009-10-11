@@ -105,36 +105,36 @@ public class Grid extends TriMesh {
         TriMesh batch = this;
         
         //We have one more vertex than the number of quads, along each axis 
-		batch.setVertexCount((xQuads + 1) * (yQuads + 1));
+		this.setVertexCount((xQuads + 1) * (yQuads + 1));
 		
 		//We need enough vertices in the buffer
-		batch.setVertexBuffer(BufferUtils.createVector3Buffer(batch.getVertexCount()));
+		this.setVertexBuffer(BufferUtils.createVector3Buffer(this.getVertexCount()));
 		
 		//One normal per vertex
-		batch.setNormalBuffer(BufferUtils.createVector3Buffer(batch.getVertexCount()));
+		this.setNormalBuffer(BufferUtils.createVector3Buffer(this.getVertexCount()));
 	
 		//One UV position per vertex
-        FloatBuffer tbuf = BufferUtils.createVector2Buffer(batch.getVertexCount());
+        FloatBuffer tbuf = BufferUtils.createVector2Buffer(this.getVertexCount());
         //setTextureBuffer(0,tbuf);
-        setTextureCoords(batch.getTextureCoords());
+        setTextureCoords(this.getTextureCoords());
         
         //Two triangles per quad
-	    batch.setTriangleQuantity(2 * xQuads * yQuads);
+	    this.setTriangleQuantity(2 * xQuads * yQuads);
 	    
 	    //3 indices per triangle
-	    batch.setIndexBuffer(BufferUtils.createIntBuffer(batch.getTriangleCount() * 3));
+	    this.setIndexBuffer(BufferUtils.createIntBuffer(this.getTriangleCount() * 3));
 
 	    //Set vertex positions, in reading order
 	    float offset = centered ? -0.5f : 0;
 		for (int x = 0; x < xQuads + 1; x++) {
 			for (int y = 0; y < yQuads + 1; y++) {
-				batch.getVertexBuffer().put(width * (offset + ((float)x) / ((float)xQuads))).put(height * (offset + ((float)y) / ((float)yQuads))).put(0);
+				this.getVertexBuffer().put(width * (offset + ((float)x) / ((float)xQuads))).put(height * (offset + ((float)y) / ((float)yQuads))).put(0);
 			}
 		}
 
 		//All normals face along z axis
-		for (int i = 0; i < batch.getVertexCount(); i++) {
-			batch.getNormalBuffer().put(0).put(0).put(1);
+		for (int i = 0; i < this.getVertexCount(); i++) {
+			this.getNormalBuffer().put(0).put(0).put(1);
 		}
 
 		//Textures are set evenly from 0 to 1 on each axis, vertices are in reading order,
@@ -158,14 +158,14 @@ public class Grid extends TriMesh {
 		    	int topLeft = x + y * (xQuads + 1);
 
 		    	//first triangle
-			    batch.getIndexBuffer().put(topLeft);					//top left
-			    batch.getIndexBuffer().put(topLeft + (xQuads + 1));		//down a line of verts
-			    batch.getIndexBuffer().put(topLeft + (xQuads + 1) + 1);	//down a line, and one to the right
+			    this.getIndexBuffer().put(topLeft);					//top left
+			    this.getIndexBuffer().put(topLeft + (xQuads + 1));		//down a line of verts
+			    this.getIndexBuffer().put(topLeft + (xQuads + 1) + 1);	//down a line, and one to the right
 
 		    	//second triangle
-			    batch.getIndexBuffer().put(topLeft);					//top left
-			    batch.getIndexBuffer().put(topLeft + (xQuads + 1) + 1);	//down a line, and one to the right
-			    batch.getIndexBuffer().put(topLeft + 1);				//one to the right
+			    this.getIndexBuffer().put(topLeft);					//top left
+			    this.getIndexBuffer().put(topLeft + (xQuads + 1) + 1);	//down a line, and one to the right
+			    this.getIndexBuffer().put(topLeft + 1);				//one to the right
 		    }	    	
 	    }
 	}
@@ -182,9 +182,9 @@ public class Grid extends TriMesh {
 	 * 		The new y coordinate of the point
 	 */
 	public void movePoint(int xIndex, int yIndex, float x, float y) {
-        TriMesh batch = this;
-		batch.getVertexBuffer().position((xIndex + yIndex * (xQuads + 1)) * 3);
-		batch.getVertexBuffer().put(x).put(y).put(0);
+        //TriMesh batch = this;
+		this.getVertexBuffer().position((xIndex + yIndex * (xQuads + 1)) * 3);
+		this.getVertexBuffer().put(x).put(y).put(0);
 	}
 	
 	/**
@@ -199,7 +199,7 @@ public class Grid extends TriMesh {
 	 * 		The new texture y coordinate of the point
 	 */
 	public void moveUV(int xIndex, int yIndex, float x, float y) {
-        //TriMesh batch = this;
+        //TriMesh this = this;
         
 		//batch.getTextureBuffer(0).position((xIndex + yIndex * (xQuads + 1)) * 2);
 		//batch.getTextureBuffer(0).put(x).put(y);
