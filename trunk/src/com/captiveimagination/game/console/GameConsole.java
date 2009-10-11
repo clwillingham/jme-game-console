@@ -4,6 +4,9 @@
 package com.captiveimagination.game.console;
 
 import java.awt.Color;
+import java.io.FileNotFoundException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.*;
 
 import com.captiveimagination.game.spatial.DialogBox;
@@ -370,6 +373,23 @@ public class GameConsole extends BasicGameState implements KeyInputListener {
             }
             position++;
         }
+    }
+    
+    public void saveLog(String location)
+    {
+    	PrintStream out;
+    	try {
+			out = new PrintStream(location);
+			for(int i=0; i < history.size(); i++)
+			{
+				out.println(history.get(i));
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			this.logErr("Could not save the Log, file not found");
+		}
+		
+		
     }
     
     public void moveUpInHistory() {
