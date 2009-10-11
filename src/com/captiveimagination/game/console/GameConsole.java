@@ -36,6 +36,8 @@ public class GameConsole extends BasicGameState implements KeyInputListener {
     private static final long serialVersionUID = 1L;
     private static final String FONT_LOCATION = "/com/jme/app/defaultfont.tga";
     
+    public static String errTag = "<Error> :";
+    
     private BlendState as;
     private TextureState font;
     
@@ -109,6 +111,8 @@ public class GameConsole extends BasicGameState implements KeyInputListener {
         listeners = new ArrayList<GameConsoleListener>();
         init();
         prompt.setTextColor(ColorRGBA.red);
+        entry.setTextColor(ColorRGBA.green);
+        cursor.setTextColor(ColorRGBA.green);
     }
     
     private void init() {
@@ -182,6 +186,8 @@ public class GameConsole extends BasicGameState implements KeyInputListener {
         getRootNode().getLocalTranslation().x = onPosition.x * onNess + offPosition.x * (1-onNess);
         getRootNode().getLocalTranslation().y = onPosition.y * onNess + offPosition.y * (1-onNess);
     }
+    
+    
     
     public void registerCommandProcessor(String name, CommandProcessor processor) {
         name = name.toLowerCase();
@@ -302,7 +308,7 @@ public class GameConsole extends BasicGameState implements KeyInputListener {
                     currentMode = mode;
                     processor.onModeActivate(this);
                 } else {
-                    log("Unknown Mode: " + mode);
+                    logErr("Unknown Mode: " + mode);
                 }
             } else {
                 StringBuffer buffer = new StringBuffer();
@@ -318,7 +324,7 @@ public class GameConsole extends BasicGameState implements KeyInputListener {
         if (processor != null) {
             processor.execute(command, this);
         } else {
-            log("No CommandProcessor set.");
+            logErr("No CommandProcessor set.");
         }
     }
     
@@ -332,6 +338,17 @@ public class GameConsole extends BasicGameState implements KeyInputListener {
         updateHistory();
     }
     
+    public void logErr(String message)
+    {
+    	if (history.size() >= maxHistory) {
+            history.poll();
+        }
+        history.add(errTag + message);
+        if (historyPosition != 0) historyPosition++;
+        
+        updateHistory();
+    }
+    
     public void updateHistory() {
         // Update history display
         int position = history.size() - rows.length - historyPosition;
@@ -339,6 +356,16 @@ public class GameConsole extends BasicGameState implements KeyInputListener {
             if (position < 0) {
                 rows[i].print("");
             } else {
+            	
+            	if(history.get(position).startsWith(errTag))
+            	{
+            		rows[i].setTextColor(ColorRGBA.red);
+            		history.get(position).replaceAll(errTag, "");
+            	}
+            	else
+            	{
+            		rows[i].setTextColor(ColorRGBA.green);
+            	}
                 rows[i].print(history.get(position));
             }
             position++;
