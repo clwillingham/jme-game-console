@@ -221,13 +221,26 @@ public class GameConsole extends BasicGameState implements KeyInputListener {
     
     private Spatial createDialogBackdrop() {
         //Make default texture
+    	float opacityAmount = 1.0f;
         Texture dialogTexture = TextureLoader.loadUncompressedTexture("resources/dialogArea.png");
         
         //Make the dialog box
         DialogBox box = new DialogBox("box", dialogTexture);
         box.setDimension(width + borders[LEFT] + borders[RIGHT], calculateHeight(rows.length) + borders[TOP] + borders[BOTTOM]);
         box.setLocalTranslation(-borders[LEFT], DisplaySystem.getDisplaySystem().getRenderer().getHeight() - calculateHeight(rows.length) - borders[BOTTOM], 0.0f);
-
+        
+        MaterialState materialState = DisplaySystem.getDisplaySystem().getRenderer().createMaterialState();
+        materialState.setAmbient(new ColorRGBA(0.0f, 0.0f, 0.0f, opacityAmount));
+        materialState.setDiffuse(new ColorRGBA(0.1f, 0.5f, 0.8f, opacityAmount));
+        materialState.setSpecular(new ColorRGBA(1.0f, 1.0f, 1.0f, opacityAmount));
+        materialState.setShininess(128.0f);
+        materialState.setEmissive(new ColorRGBA(0.0f, 0.0f, 0.0f, opacityAmount));
+        materialState.setEnabled(true);
+        
+        materialState.setMaterialFace(MaterialState.MaterialFace.FrontAndBack);
+        box.setRenderState(materialState);
+        box.updateRenderState();
+        
         //Create alpha state to blend using alpha
         BlendState bas = DisplaySystem.getDisplaySystem().getRenderer().createBlendState();
         bas.setBlendEnabled(true);

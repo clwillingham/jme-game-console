@@ -41,8 +41,8 @@ public class TestGText {
     	GameStateManager.getInstance().attachChild(debug);
     	debug.setActive(true);
     	
-    	GFont font = new GFont(new Font(Font.SANS_SERIF, Font.TRUETYPE_FONT, 200));
-    	GText text = new GText(font, 1, 4);
+    	GFont font = new GFont(new Font(Font.SANS_SERIF, Font.TRUETYPE_FONT, 30));
+    	GText text = new GText(font, 1, 2);
     	text.setText("Test");
     	
     	text.setFill(ColorRGBA.green);
