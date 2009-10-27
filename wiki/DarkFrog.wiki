@@ -1,0 +1,1 @@
+DarkFrog is the developer of this project. after it was created he moved on to other stuff. eventually i found the project though and updated it to jme 2.0
