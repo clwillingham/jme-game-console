@@ -34,6 +34,7 @@ import com.jme.system.*;
 import com.jme.util.*;
 import com.jmex.game.*;
 import com.jmex.game.state.*;
+import com.jmex.model.collada.schema.string;
 
 /**
  * @author Matthew D. Hicks
@@ -92,9 +93,13 @@ public class GameConsole extends BasicGameState implements KeyInputListener {
     
     private boolean useSystemOut = false;
     PipedInputStream pin;
+    PipedInputStream errPin;
     PipedOutputStream pout;
+    PipedOutputStream errPout;
     PrintStream out;
+    PrintStream errOut;
     BufferedReader in;
+    BufferedReader errIn;
     
     public GameConsole(int key, int rows, boolean echo) {
         this(key, rows, echo, 
@@ -191,6 +196,12 @@ public class GameConsole extends BasicGameState implements KeyInputListener {
 			out = new PrintStream(pout);
 			in = new BufferedReader(new InputStreamReader(pin));
 			System.setOut(out);
+			
+    		errPin = new PipedInputStream();
+			errPout = new PipedOutputStream(errPin);
+			errOut = new PrintStream(pout);
+			errIn = new BufferedReader(new InputStreamReader(pin));
+			System.setErr(errOut);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -224,7 +235,12 @@ public class GameConsole extends BasicGameState implements KeyInputListener {
     	try {
 			if(in.ready())
 			{
-				this.log(in.readLine());
+				String instr = in.readLine();
+				this.log(instr);
+			}
+			if(errIn.ready())
+			{
+				this.logErr(errIn.readLine());
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
