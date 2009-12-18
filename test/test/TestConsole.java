@@ -47,7 +47,7 @@ public class TestConsole {
 		
     	int rows = 5;
     	GameConsole console = new GameConsole(KeyInput.KEY_GRAVE, rows, true);
-    	
+    	console.setUseSystemOut(true);
 //    	GameConsole console = new GameConsole(KeyInput.KEY_GRAVE, rows, true, 
 //				new float[]{8, 8, 8, 8}, 
 //				new Vector2f(100, -16), 
@@ -70,5 +70,6 @@ public class TestConsole {
 		
 		GameStateManager.getInstance().attachChild(console);
 		console.setActive(true);
+		
 	}
 }

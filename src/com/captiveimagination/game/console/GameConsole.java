@@ -3,9 +3,14 @@
  */
 package com.captiveimagination.game.console;
 
-import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
-import java.io.OutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
 import java.io.PrintStream;
 import java.util.*;
 
@@ -22,7 +27,6 @@ import com.jme.renderer.*;
 import com.jme.scene.*;
 import com.jme.scene.Spatial.TextureCombineMode;
 import com.jme.scene.state.*;
-import com.jme.scene.state.BlendState.BlendEquation;
 import com.jme.scene.state.BlendState.DestinationFunction;
 import com.jme.scene.state.BlendState.SourceFunction;
 import com.jme.scene.state.BlendState.TestFunction;
@@ -86,6 +90,12 @@ public class GameConsole extends BasicGameState implements KeyInputListener {
     private Text prompt;
     private String promptString;
     
+    private boolean useSystemOut = false;
+    PipedInputStream pin;
+    PipedOutputStream pout;
+    PrintStream out;
+    BufferedReader in;
+    
     public GameConsole(int key, int rows, boolean echo) {
         this(key, rows, echo, 
                 new float[]{0, 20, 0, 0}, 
@@ -116,6 +126,7 @@ public class GameConsole extends BasicGameState implements KeyInputListener {
         prompt.setTextColor(ColorRGBA.red);
         entry.setTextColor(ColorRGBA.green);
         cursor.setTextColor(ColorRGBA.green);
+        
     }
     
     private void init() {
@@ -172,6 +183,20 @@ public class GameConsole extends BasicGameState implements KeyInputListener {
         //getRootNode().getLocalTranslation().y = backdropHeight;
     }
     
+    private void setupOutput()
+    {
+    	try {
+    		pin = new PipedInputStream();
+			pout = new PipedOutputStream(pin);
+			out = new PrintStream(pout);
+			in = new BufferedReader(new InputStreamReader(pin));
+			System.setOut(out);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
     public boolean isOpen() {
     	return on;
     }
@@ -188,6 +213,23 @@ public class GameConsole extends BasicGameState implements KeyInputListener {
         float onNess = spring.getPosition();
         getRootNode().getLocalTranslation().x = onPosition.x * onNess + offPosition.x * (1-onNess);
         getRootNode().getLocalTranslation().y = onPosition.y * onNess + offPosition.y * (1-onNess);
+        if(useSystemOut)
+        {
+        	updateOut();
+        }
+    }
+    
+    private void updateOut()
+    {
+    	try {
+			if(in.ready())
+			{
+				this.log(in.readLine());
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     
@@ -519,4 +561,16 @@ public class GameConsole extends BasicGameState implements KeyInputListener {
     public boolean removeListener(GameConsoleListener listener) {
     	return listeners.remove(listener);
     }
+
+	public void setUseSystemOut(boolean useSystemOut) {
+		this.useSystemOut = useSystemOut;
+		if(useSystemOut)
+		{
+			setupOutput();
+		}
+	}
+
+	public boolean usesSystemOut() {
+		return useSystemOut;
+	}
 }

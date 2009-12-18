@@ -5,16 +5,6 @@
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/jsr223-engines/beanshell/lib/bsh-2.0b5.jar"/>
-	<classpathentry kind="lib" path="/jME Physics 2/release/lib/odejava-jni.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="jME Physics 2/release/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/jME Physics 2/release/jme-physics.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="jME Physics 2/release/lib"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="/Levitank/jME/lib/lwjgl.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Levitank/jME/lib/natives"/>
@@ -30,5 +20,6 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Levitank/jME/lib/natives"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/Levitank/jme-physics-2.1/jme-physics.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
