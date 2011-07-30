@@ -13,10 +13,13 @@ import com.captiveimagination.game.console.*;
  */
 public class JavaCommandProcessor implements CommandProcessor {
 	private Interpreter interpreter;
+	private GameConsole console;
 	
 	public JavaCommandProcessor(GameConsole console) {
 		interpreter = new Interpreter();
+		this.console = console;
 	}
+	
 	
 	public void register(String namespace, Object object) throws EvalError {
 		interpreter.set(namespace, object);
