@@ -1,0 +1,18 @@
+use("pnuts.lib");
+
+function f(){
+   x = 0
+   function set(value) x = value
+   function get() x
+   ::set = set
+   ::get = get
+}
+println("begin")
+f()
+println("set")
+set(100)
+println(get())
+println("reset")               
+f()
+println("get")
+println(get())               

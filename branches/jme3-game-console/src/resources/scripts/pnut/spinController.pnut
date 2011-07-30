@@ -1,0 +1,20 @@
+use("pnuts.lib");
+//import com.jme.math.*;
+
+incr = 1.0f;
+//rotVec = new Vector3f(0.0f, 1.0f, 0.0f);
+//rotQuat = new Quaternion();
+angle = 0;
+
+function update(time, mesh) {
+	//update the angle
+    angle++;
+    if (angle > 360) {
+        angle = 0;
+    }
+    //rotQuat.fromAngleNormalAxis(angle * FastMath.DEG_TO_RAD, rotVec);
+    //mesh.setLocalRotation(rotQuat);	
+	println("angle="+angle);
+}
+
+println("PNut update script loaded...");
