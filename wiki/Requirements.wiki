@@ -14,3 +14,5 @@ So here is the requirements for the jME Game Console:
   * the console shall be easy to add to your jME project with as little code as possible (preferrably no more than two or three lines to add a simple console)
   * the console shall be capable of running script files of any supported languages
   * the consoles code shall be logically organized in a way that allows for easy modification of the game console.
+----
+have some more requirements you think should be added? contact me and let me know, or just post a comment here.
